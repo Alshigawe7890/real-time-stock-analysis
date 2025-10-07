@@ -5,3 +5,6 @@ pandas
 
 websocket-client
 
+
+yfinance
+
