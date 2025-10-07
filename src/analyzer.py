@@ -2,8 +2,12 @@ import pandas as pd
 import os
 
 DATA_DIR = "data"
+ANALYSIS_DIR = "analysis"
 
-def calculate_moving_average(df, window=20):
+if not os.path.exists(ANALYSIS_DIR):
+    os.makedirs(ANALYSIS_DIR)
+
+def calculate_moving_average(df, window=5):
     df["SMA"] = df["Close"].rolling(window=window).mean()
     return df
 
@@ -20,8 +24,9 @@ def analyze_data(symbol):
     # Calculate Simple Moving Average (SMA)
     df = calculate_moving_average(df)
 
-    print(f"\nAnalysis for {symbol}:")
-    print(df.tail())
+    output_filename = os.path.join(ANALYSIS_DIR, f"{symbol}_analysis.csv")
+    df.to_csv(output_filename)
+    print(f"Analysis for {symbol} saved to {output_filename}")
 
 if __name__ == "__main__":
     stock_symbols = ["AAPL", "MSFT", "AMZN", "GOOGL", "TSLA"]
