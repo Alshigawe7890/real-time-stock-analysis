@@ -2,3 +2,6 @@
 finnhub-python
 pandas
 
+
+websocket-client
+
