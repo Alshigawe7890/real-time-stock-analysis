@@ -12,7 +12,7 @@ def save_to_csv(symbol, data):
     filename = os.path.join(DATA_DIR, f"{symbol}_data.csv")
     file_exists = os.path.isfile(filename)
 
-    with open(filename, mode=\'a\', newline=\'\') as file:
+    with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
         if not file_exists:
             writer.writerow(["Timestamp", "Symbol", "Open", "High", "Low", "Close", "Volume"])
@@ -22,9 +22,6 @@ def fetch_realtime_data(symbols):
     for symbol in symbols:
         try:
             ticker = yf.Ticker(symbol)
-            # Get the most recent intraday data (e.g., 1-minute interval)
-            # Note: Yahoo Finance API might have limitations on real-time intraday data for free users.
-            # This will fetch the latest available data point.
             hist = ticker.history(period="1d", interval="1m")
 
             if not hist.empty:
@@ -46,11 +43,10 @@ def fetch_realtime_data(symbols):
             print(f"Error fetching data for {symbol}: {e}")
 
 if __name__ == "__main__":
-    # List of US stock symbols to track
     stock_symbols = ["AAPL", "MSFT", "AMZN", "GOOGL", "TSLA"]
     
     print("Starting real-time data collection using yfinance...")
     while True:
         fetch_realtime_data(stock_symbols)
-        time.sleep(60) # Fetch data every 60 seconds (1 minute)
+        time.sleep(60)
 
